@@ -1,5 +1,5 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.4 FATAL_ERROR)
-PROJECT(ukf)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
+PROJECT(ukf_catkin)
 INCLUDE(ExternalProject)
 INCLUDE(CheckCXXCompilerFlag)
 
@@ -33,6 +33,9 @@ LOG_BUILD ON)
 ExternalProject_Get_Property(eigen3 source_dir)
 SET(eigen_dir ${source_dir})
 
+find_package(catkin_simple REQUIRED)
+catkin_simple()
+
 INCLUDE_DIRECTORIES(${eigen_dir})
 
 GET_DIRECTORY_PROPERTY(hasParent PARENT_DIRECTORY)
@@ -45,3 +48,6 @@ ENABLE_TESTING()
 ADD_SUBDIRECTORY(test EXCLUDE_FROM_ALL)
 ADD_SUBDIRECTORY(benchmark EXCLUDE_FROM_ALL)
 ADD_SUBDIRECTORY(examples EXCLUDE_FROM_ALL)
+
+cs_install()
+cs_export(INCLUDE_DIRS ${eigen_dir})
